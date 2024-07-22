@@ -1,17 +1,57 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from "react-dom/client";
+import * as React from "react";
+import { createRoot } from "react-dom/client";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import { useState } from "react";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Route,
+  Link,
+} from "react-router-dom";
+import App from "./components/WeatherPage";
+import Header from "./components/Header";
+
+import WeatherPage from "./components/WeatherPage";
+import "./App.css";
+import Weather from "./components/Weather";
+import HomePage from "./components/HomePage";
+import WeatherIcon from "./images/weather.png";
+
+import Home from "./images/home.png";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <>
+        <Helmet>
+          <title>Home Page</title>
+          <link rel="icon" type="image/x-icon" href={Home} />
+        </Helmet>
+        <HomePage />,
+      </>
+    ),
+  },
+  {
+    path: "/weather",
+    element: (
+      <>
+        <Helmet>
+          <title>Weather</title>
+          <link rel="icon" type="image/x-icon" href={WeatherIcon} />
+        </Helmet>
+        <WeatherPage />,
+      </>
+    ),
+  },
+]);
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <HelmetProvider>
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
+  </HelmetProvider>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
